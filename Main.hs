@@ -1,23 +1,18 @@
 module Main where
 
 import Data.Char (isAlpha)
-import Data.List (isPrefixOf)
+import Data.Text (pack, unpack, breakOn)
 
 main :: IO ()
 main = do
         sampleHtml <- readFile "samples/VeryShortStories.htm"
-        let originalWords = collectWords False sampleHtml
+        let (_, htmlBody) = breakOn (pack "<body") (pack sampleHtml)
+        let originalWords = collectWords (unpack htmlBody)
         putStrLn $ unwords originalWords
 
-collectWords :: Bool -> String -> [String]
-collectWords _ [] = []
-collectWords inBody text@(x:xs)
-        | isAlpha x =
-                if inBody
-                        then aWord : collectWords inBody (dropWhile isAlpha text)
-                        else collectWords inBody (dropWhile isAlpha text)
-        | x == '<' = collectWords updateInBody (dropWhile (/= '>') xs)
-        | otherwise = collectWords inBody xs
-        where
-                aWord = takeWhile isAlpha text
-                updateInBody = inBody || "body " `isPrefixOf` xs || "body>" `isPrefixOf` xs
+collectWords :: String -> [String]
+collectWords [] = []
+collectWords text@(x:xs)
+        | isAlpha x = takeWhile isAlpha text : collectWords (dropWhile isAlpha text)
+        | x == '<' = collectWords (dropWhile (/= '>') xs)
+        | otherwise = collectWords xs
