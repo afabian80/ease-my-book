@@ -1,7 +1,7 @@
 # User story "A" - Analyze input HTML file
 - [x] Go through HTML input and collect words from the body,
     ignoring everything inside tags
-- [ ] Keep track of the original sentence for each word
+- [x] Keep track of the original sentences
 - [ ] Go through the words and find the headwords for them
 - [ ] Group all words by headwords
 - [ ] Count all headword occurrences in the original input
