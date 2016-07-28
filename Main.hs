@@ -7,17 +7,17 @@ main :: IO ()
 main = do
         sampleHtml <- readFile "sample.html"
         --sampleHtml <- readFile "/Users/akos/Documents/Programming/Haskell/coca-hs/html-samples/TheSecretGarden.html"
-        putStrLn $ unwords $ parse False sampleHtml
+        putStrLn $ unwords $ collectWords False sampleHtml
 
-parse :: Bool -> String -> [String]
-parse _ [] = []
-parse inBody text@(x:xs)
+collectWords :: Bool -> String -> [String]
+collectWords _ [] = []
+collectWords inBody text@(x:xs)
         | isAlpha x =
                 if inBody
-                        then aWord : parse inBody (dropWhile isAlpha text)
-                        else parse inBody (dropWhile isAlpha text)
-        | x == '<' = parse updateInBody (dropWhile (/= '>') xs)
-        | otherwise = parse inBody xs
+                        then aWord : collectWords inBody (dropWhile isAlpha text)
+                        else collectWords inBody (dropWhile isAlpha text)
+        | x == '<' = collectWords updateInBody (dropWhile (/= '>') xs)
+        | otherwise = collectWords inBody xs
         where
                 aWord = takeWhile isAlpha text
                 updateInBody = inBody || "body " `isPrefixOf` xs || "body>" `isPrefixOf` xs
