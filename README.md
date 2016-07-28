@@ -14,9 +14,9 @@ to something like this:
 The words of your book are compared to a word frequency list of 25 thousand headwords, and the colors are decided based on their frequency in this list.
 
 You have to provide 3 input arguments for this program:
-1. The path to an HTML file. (You can convert any book to HTML with Calibre)
-2. A number (`A`). This is the Nth thousand block from the BNC-COCA list that you have already learnt. Let's say `A = 4`, which means you know the first 4 thousand words by heart.
-3. Another number (`B`). This is your goal for the coming months/years to learn the words up to. Let's say `B = 6`
+* The path to an HTML file. (You can convert any book to HTML with Calibre)
+* A number (`A`). This is the Nth thousand block from the BNC-COCA list that you have already learnt. Let's say `A = 4`, which means you know the first 4 thousand words by heart.
+* Another number (`B`). This is your goal for the coming months/years to learn the words up to. Let's say `B = 6`
 
 If you execute the program, it will:
 * Leave all words __uncolored__ that can be found in the first `A = 4` thousand words.
