@@ -5,7 +5,7 @@ import Data.List (isPrefixOf)
 
 main :: IO ()
 main = do
-        sampleHtml <- readFile "sample.html"
+        sampleHtml <- readFile "samples/sample.html"
         --sampleHtml <- readFile "/Users/akos/Documents/Programming/Haskell/coca-hs/html-samples/TheSecretGarden.html"
         putStrLn $ unwords $ collectWords False sampleHtml
 
