@@ -1,0 +1,42 @@
+<html>
+
+<style>
+    .code {
+        background-color:Beige;
+        border: 2px solid Grey;
+        padding: 10px;
+        margin: 20px;
+        max-width: 500px;
+
+    }
+    .ignore {
+        background-color:LightGrey;
+        display: inline-block;
+    }
+    .hard {
+        background-color:Salmon;
+        display: inline-block;
+    }
+    .easy {
+        background-color:LightGreen;
+        display: inline-block;
+    }
+</style>
+
+<body>
+This program can turn this content:
+<div class="code">
+Joffrey gave a petulant shrug. "Your brother defeated my uncle Jaime.
+My mother says it was treachery and deceit. She wept when she heard."
+</div>
+
+to this content:
+
+<div class="code">
+<div class="ignore">Joffrey</div> gave a <div class="hard">petulant (ingerlékeny 5)</div> shrug. "Your brother defeated my uncle <div class="ignore">Jaime</div>.
+My mother says it was treachery and <div class="easy">deceit (csalás 3)</div>. She wept when she heard."
+</div>
+
+
+</body>
+</html>
