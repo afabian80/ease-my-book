@@ -2,12 +2,15 @@ module Main where
 
 import Data.Char (isAlpha)
 import Data.List (isPrefixOf)
+import System.IO (openFile, IOMode(ReadMode), hSetEncoding, utf8, hGetContents, hClose)
 
 main :: IO ()
 main = do
-        sampleHtml <- readFile "samples/sample.html"
-        --sampleHtml <- readFile "/Users/akos/Documents/Programming/Haskell/coca-hs/html-samples/TheSecretGarden.html"
+        handle <- openFile "samples/VeryShortStories2.htm" ReadMode
+        hSetEncoding handle utf8
+        sampleHtml <- hGetContents handle
         putStrLn $ unwords $ collectWords False sampleHtml
+        hClose handle
 
 collectWords :: Bool -> String -> [String]
 collectWords _ [] = []
