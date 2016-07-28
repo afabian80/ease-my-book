@@ -1,0 +1,3 @@
+#!/bin/bash -xe
+
+kotlinc Main.kt -include-runtime -d ease.jar
