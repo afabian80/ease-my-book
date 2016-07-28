@@ -6,7 +6,8 @@ import Data.List (isPrefixOf)
 main :: IO ()
 main = do
         sampleHtml <- readFile "samples/VeryShortStories.htm"
-        putStrLn $ unwords $ collectWords False sampleHtml
+        let originalWords = collectWords False sampleHtml
+        putStrLn $ unwords originalWords
 
 collectWords :: Bool -> String -> [String]
 collectWords _ [] = []
