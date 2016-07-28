@@ -2,15 +2,11 @@ module Main where
 
 import Data.Char (isAlpha)
 import Data.List (isPrefixOf)
-import System.IO (openFile, IOMode(ReadMode), hSetEncoding, utf8, hGetContents, hClose)
 
 main :: IO ()
 main = do
-        handle <- openFile "samples/VeryShortStories2.htm" ReadMode
-        hSetEncoding handle utf8
-        sampleHtml <- hGetContents handle
+        sampleHtml <- readFile "samples/VeryShortStories.htm"
         putStrLn $ unwords $ collectWords False sampleHtml
-        hClose handle
 
 collectWords :: Bool -> String -> [String]
 collectWords _ [] = []
