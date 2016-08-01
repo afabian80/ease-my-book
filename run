@@ -1,3 +1,0 @@
-#!/bin/bash -xe
-
-java -jar ease.jar $1
