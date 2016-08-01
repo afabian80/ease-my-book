@@ -3,6 +3,8 @@ module Main where
 import Data.Char (isAlpha)
 import Data.Text (pack, unpack, breakOn)
 import Data.List.Split (splitOn)
+import Data.List (isPrefixOf)
+
 
 main :: IO ()
 main = do
@@ -30,6 +32,7 @@ transform text@(x:xs)
         | isSentenceBorder x = x : '\n' : transform xs
         | isSpecialChar x = x : transform xs
         | x == '<' = transform (dropWhile (/= '>') xs)
+        | "&nbsp;" `isPrefixOf` text = '\n' : transform (drop 6 text)
         | otherwise = transform xs
 
 clean :: String -> String
