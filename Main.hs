@@ -8,7 +8,7 @@ import Data.List (isPrefixOf)
 
 main :: IO ()
 main = do
-        sampleHtml <- readFile "samples/VeryShortStories.htm"
+        sampleHtml <- readFile "clash.html"
         let (_, htmlBody) = breakOn (pack "<body") (pack sampleHtml)
         let cleanBody = clean $ transform $ unpack htmlBody
         let sentences = splitOn "\n" cleanBody
