@@ -12,7 +12,8 @@ main = do
         let (_, htmlBody) = breakOn (pack "<body") (pack sampleHtml)
         let cleanBody = clean $ transform $ unpack htmlBody
         let sentences = splitOn "\n" cleanBody
-        putStrLn $ unlines $ map (\x -> show (fst x :: Integer) ++ ": " ++ snd x) (zip [1..100] sentences)
+        let cleanSentences = filter (/= ".") sentences
+        putStrLn $ unlines $ map (\x -> show (fst x :: Integer) ++ ": " ++ snd x) (zip [1..100] cleanSentences)
         --putStrLn (unlines $ map (\x -> show (fst x) ++ ": " ++ snd x) sentences)
         -- let originalWords = collectWords (unpack htmlBody)
         -- putStrLn $ unwords originalWords
@@ -52,7 +53,7 @@ isSentenceBorder :: Char -> Bool
 isSentenceBorder c = c `elem` ".;?!"
 
 isSpecialChar :: Char -> Bool
-isSpecialChar c = c `elem` ",;:- \n"
+isSpecialChar c = c `elem` ",;:-'’ \n"
 
 -- TODO
 -- remove tags
