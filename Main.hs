@@ -10,7 +10,7 @@ main = do
         let (_, htmlBody) = breakOn (pack "<body") (pack sampleHtml)
         let cleanBody = clean $ transform $ unpack htmlBody
         let sentences = splitOn "\n" cleanBody
-        putStrLn $ unlines $ map (\x -> show (fst x) ++ ": " ++ snd x) (zip [1..] sentences)
+        putStrLn $ unlines $ map (\x -> show (fst x :: Integer) ++ ": " ++ snd x) (zip [1..] sentences)
         --putStrLn (unlines $ map (\x -> show (fst x) ++ ": " ++ snd x) sentences)
         -- let originalWords = collectWords (unpack htmlBody)
         -- putStrLn $ unwords originalWords
