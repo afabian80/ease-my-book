@@ -14,9 +14,6 @@ main = do
         let sentences = splitOn "\n" cleanBody
         let cleanSentences = filter (/= ".") sentences
         putStrLn $ unlines $ map (\x -> show (fst x :: Integer) ++ ": " ++ snd x) (zip [1..100] cleanSentences)
-        --putStrLn (unlines $ map (\x -> show (fst x) ++ ": " ++ snd x) sentences)
-        -- let originalWords = collectWords (unpack htmlBody)
-        -- putStrLn $ unwords originalWords
 
 -- collectWords :: String -> [String]
 -- collectWords [] = []
@@ -54,9 +51,3 @@ isSentenceBorder c = c `elem` ".;?!"
 
 isSpecialChar :: Char -> Bool
 isSpecialChar c = c `elem` ",;:-'’ \n"
-
--- TODO
--- remove tags
--- remove multiple linebreaks
--- collapse multiple spaces
--- break on [.?!] but also keep them in the text
