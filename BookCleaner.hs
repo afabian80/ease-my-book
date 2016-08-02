@@ -31,4 +31,4 @@ isSentenceBorder :: Char -> Bool
 isSentenceBorder c = c `elem` ".;?!"
 
 isSpecialChar :: Char -> Bool
-isSpecialChar c = c `elem` ",;:-'’ \n"
+isSpecialChar c = c `elem` ",:-'’ \n"
