@@ -1,6 +1,7 @@
 module Main where
 
-import           Database           (readDB)
+import           Data.Char          (toLower)
+import           Database           (dbToSets, readDB, wordCategory)
 import           System.Environment (getArgs)
 import           System.Exit        (die)
 import           TextProcessor      (collectSentences, collectWords)
@@ -29,4 +30,10 @@ run inputFile = do
         let originalWords = collectWords html
         let numWords = length originalWords
         putStrLn $ "Number of words: " ++ show numWords
-        -- putStrLn $ unlines originalWords
+
+        let lowercaseWords = map (map toLower) originalWords
+        let dbSets = dbToSets cocaDB
+        let wordCategories = map (`wordCategory` dbSets) lowercaseWords
+        let pairs = zip wordCategories lowercaseWords
+        putStrLn $ unlines $ map (\(a,b) -> show a ++ ": " ++ show b) pairs
+        print "Done."
