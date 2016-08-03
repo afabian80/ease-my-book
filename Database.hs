@@ -1,4 +1,4 @@
-module Database (readDB) where
+module Database (readDB, wordCategoryVector) where
 
 import           Text.Printf
 import qualified Data.Set        as Set
@@ -20,10 +20,13 @@ readDB :: IO [[String]]
 readDB = sequence loadAll
 
 db2set :: [String] -> Set.Set String
-db2set db = Set.fromList $ words $ concat db
+db2set db = Set.fromList $ words $ unwords db
 
 dbs2sets :: [[String]] -> [Set.Set String]
 dbs2sets = map db2set
 
--- wordCategory :: String -> [[String]] -> Integer
--- wordCategory w db =
+wordInSet :: String -> Set.Set String -> Bool
+wordInSet = Set.member
+
+wordCategoryVector :: String -> [Set.Set String] -> [Bool]
+wordCategoryVector w = map (wordInSet w)
