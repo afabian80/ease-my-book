@@ -1,4 +1,4 @@
-module Database (loadSingle, generateFileNames, loadAll) where
+module Database (readDB) where
 
 import Text.Printf
 
@@ -14,3 +14,6 @@ generateFileNames = map (printf genPattern) ([1..25] :: [Integer])
 
 loadAll :: [IO [String]]
 loadAll = map loadSingle generateFileNames
+
+readDB :: IO [[String]]
+readDB = sequence loadAll
