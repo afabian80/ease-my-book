@@ -1,7 +1,8 @@
-module Database (readDB, wordCategoryVector) where
+module Database (readDB, wordCategoryVector, dbToSets) where
 
 import           Text.Printf
 import qualified Data.Set        as Set
+--import Data.List (elemIndex)
 
 loadSingle :: FilePath -> IO [String]
 loadSingle path = do
@@ -19,14 +20,17 @@ loadAll = map loadSingle generateFileNames
 readDB :: IO [[String]]
 readDB = sequence loadAll
 
-db2set :: [String] -> Set.Set String
-db2set db = Set.fromList $ words $ unwords db
+singleDBToSet :: [String] -> Set.Set String
+singleDBToSet db = Set.fromList $ words $ unwords db
 
-dbs2sets :: [[String]] -> [Set.Set String]
-dbs2sets = map db2set
+dbToSets :: [[String]] -> [Set.Set String]
+dbToSets = map singleDBToSet
 
 wordInSet :: String -> Set.Set String -> Bool
 wordInSet = Set.member
 
 wordCategoryVector :: String -> [Set.Set String] -> [Bool]
 wordCategoryVector w = map (wordInSet w)
+
+-- wordCategory :: [Bool] -> Maybe Int
+-- wordCategory bs = elemIndex True bs
