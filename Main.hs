@@ -4,6 +4,7 @@ import Data.Text (pack, unpack, breakOn)
 import Data.List.Split (splitOn)
 import BookCleaner (clean, transform)
 import Database (readDB)
+import TextProcessor (collectWords)
 
 main :: IO ()
 main = do
@@ -13,13 +14,8 @@ main = do
         let sentences = splitOn "\n" cleanBody
         let cleanSentences = filter (/= ".") sentences
         --putStrLn $ unlines $ map (\x -> show (fst x :: Integer) ++ ": " ++ snd x) (zip [1..100] cleanSentences)
-        cocaDB <- readDB
-        putStrLn $ unlines (cocaDB !! 0)
+        --cocaDB <- readDB
+        --putStrLn $ unlines (cocaDB !! 0)
+        let bookWords = collectWords sampleHtml
+        putStrLn $ unlines bookWords
         print "Done"
-
--- collectWords :: String -> [String]
--- collectWords [] = []
--- collectWords text@(x:xs)
---         | isAlpha x = takeWhile isAlpha text : collectWords (dropWhile isAlpha text)
---         | x == '<' = collectWords (dropWhile (/= '>') xs)
---         | otherwise = collectWords xs
