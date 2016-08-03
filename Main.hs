@@ -1,9 +1,9 @@
 module Main where
 
-import System.Environment (getArgs)
-import System.Exit (die)
-import Database (readDB)
-import TextProcessor (collectWords, collectSentences)
+import           Database           (readDB)
+import           System.Environment (getArgs)
+import           System.Exit        (die)
+import           TextProcessor      (collectSentences, collectWords)
 
 main :: IO ()
 main = do

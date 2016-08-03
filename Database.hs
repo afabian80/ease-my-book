@@ -1,6 +1,6 @@
 module Database (readDB) where
 
-import Text.Printf
+import           Text.Printf
 
 loadSingle :: FilePath -> IO [String]
 loadSingle path = do

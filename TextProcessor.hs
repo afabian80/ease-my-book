@@ -1,9 +1,9 @@
 module TextProcessor (collectWords, collectSentences) where
 
-import Data.Char (isAlpha)
-import Data.Text (pack, unpack, breakOn)
-import BookCleaner (clean, transform)
-import Data.List.Split (splitOn)
+import           BookCleaner     (clean, transform)
+import           Data.Char       (isAlpha)
+import           Data.List.Split (splitOn)
+import           Data.Text       (breakOn, pack, unpack)
 
 collectWords :: String -> [String]
 collectWords [] = []

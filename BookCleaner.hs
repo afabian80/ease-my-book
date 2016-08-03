@@ -1,7 +1,7 @@
 module BookCleaner (clean, transform) where
 
-import Data.Char (isAlpha)
-import Data.List (isPrefixOf)
+import           Data.Char (isAlpha)
+import           Data.List (isPrefixOf)
 
 transform :: String -> String
 transform [] = []
