@@ -1,4 +1,4 @@
-module Database (loadSingle, generateFileNames) where
+module Database (loadSingle, generateFileNames, loadAll) where
 
 import Text.Printf
 
@@ -13,4 +13,4 @@ generateFileNames = map (printf genPattern) ([1..25] :: [Integer])
                 genPattern = "frequency-lists/basewrd%02d.txt"
 
 loadAll :: [IO [String]]
-loadAll = map (loadSingle) generateFileNames
+loadAll = map loadSingle generateFileNames
