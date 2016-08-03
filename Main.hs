@@ -5,15 +5,15 @@ import TextProcessor (collectWords, collectSentences)
 
 main :: IO ()
 main = do
-        sampleHtml <- readFile "clash.html"
+        html <- readFile "clash.html"
 
-        let sentences = collectSentences sampleHtml
-        putStrLn $ unlines sentences
+        let originalSentences = collectSentences html
+        --putStrLn $ unlines originalSentences
 
-        --cocaDB <- readDB
+        cocaDB <- readDB
         --putStrLn $ unlines (cocaDB !! 0)
 
-        -- let bookWords = collectWords sampleHtml
-        -- putStrLn $ unlines bookWords
+        let originalWords = collectWords html
+        -- putStrLn $ unlines originalWords
 
         print "Done"
