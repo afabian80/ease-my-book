@@ -25,13 +25,9 @@ run inputFile lowerLimit upperLimit = do
         let body = getHtmlBody html
 
         -- let originalSentences = collectSentences body
-        -- let numSentences = length originalSentences
-        -- putStrLn $ "Number of sentences: " ++ show numSentences
-
         cocaDB <- readDB
         let numDBs = length cocaDB
         putStrLn $ "Number of DBs : " ++ show numDBs
-        --putStrLn $ unlines (cocaDB !! 0)
 
         let originalWords = collectWords body
         let numWords = length originalWords
@@ -63,9 +59,4 @@ run inputFile lowerLimit upperLimit = do
         print "Red pairs:"
         putStrLn $ unlines $ map (\(a,b) -> show a ++ ": " ++ show b) redPairs
 
-        -- print "Green words:"
-        -- putStrLn $ unlines greenWords
-        --
-        -- print "Red words:"
-        -- putStrLn $ unlines redWords
         print "Done."
