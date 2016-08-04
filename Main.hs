@@ -5,7 +5,7 @@ import qualified Data.Set           as Set
 import           Database           (dbToSets, readDB, wordCategory)
 import           System.Environment (getArgs)
 import           System.Exit        (die)
-import           TextProcessor      (collectSentences, collectWords, getHtmlBody)
+import           TextProcessor      (collectWords, getHtmlBody)
 
 main :: IO ()
 main = do
@@ -24,7 +24,7 @@ run inputFile lowerLimit upperLimit = do
         html <- readFile inputFile
         let body = getHtmlBody html
 
-        -- let originalSentences = collectSentences body
+        --let originalSentences = collectSentences body
         cocaDB <- readDB
         let numDBs = length cocaDB
         putStrLn $ "Number of DBs : " ++ show numDBs
