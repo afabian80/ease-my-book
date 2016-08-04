@@ -24,9 +24,9 @@ run inputFile lowerLimit upperLimit = do
         html <- readFile inputFile
         let body = getHtmlBody html
 
-        let originalSentences = collectSentences body
-        let numSentences = length originalSentences
-        putStrLn $ "Number of sentences: " ++ show numSentences
+        -- let originalSentences = collectSentences body
+        -- let numSentences = length originalSentences
+        -- putStrLn $ "Number of sentences: " ++ show numSentences
 
         cocaDB <- readDB
         let numDBs = length cocaDB
