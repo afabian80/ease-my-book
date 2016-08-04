@@ -1,4 +1,4 @@
-module TextProcessor (collectWords, collectSentences) where
+module TextProcessor (collectWords, collectSentences, getHtmlBody) where
 
 import           BookCleaner     (clean, transform)
 import           Data.Char       (isAlpha)

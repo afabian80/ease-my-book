@@ -5,7 +5,7 @@ import qualified Data.Set           as Set
 import           Database           (dbToSets, readDB, wordCategory)
 import           System.Environment (getArgs)
 import           System.Exit        (die)
-import           TextProcessor      (collectSentences, collectWords)
+import           TextProcessor      (collectSentences, collectWords, getHtmlBody)
 
 main :: IO ()
 main = do
@@ -22,8 +22,9 @@ main = do
 run :: FilePath -> Int -> Int -> IO ()
 run inputFile lowerLimit upperLimit = do
         html <- readFile inputFile
+        let body = getHtmlBody html
 
-        let originalSentences = collectSentences html
+        let originalSentences = collectSentences body
         let numSentences = length originalSentences
         putStrLn $ "Number of sentences: " ++ show numSentences
 
@@ -32,7 +33,7 @@ run inputFile lowerLimit upperLimit = do
         putStrLn $ "Number of DBs : " ++ show numDBs
         --putStrLn $ unlines (cocaDB !! 0)
 
-        let originalWords = collectWords html
+        let originalWords = collectWords body
         let numWords = length originalWords
         putStrLn $ "Number of words: " ++ show numWords
 
@@ -62,9 +63,9 @@ run inputFile lowerLimit upperLimit = do
         print "Red pairs:"
         putStrLn $ unlines $ map (\(a,b) -> show a ++ ": " ++ show b) redPairs
 
-        print "Green words:"
-        putStrLn $ unlines greenWords
-
-        print "Red words:"
-        putStrLn $ unlines redWords
+        -- print "Green words:"
+        -- putStrLn $ unlines greenWords
+        --
+        -- print "Red words:"
+        -- putStrLn $ unlines redWords
         print "Done."
