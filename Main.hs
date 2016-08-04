@@ -10,12 +10,16 @@ main :: IO ()
 main = do
         args <- getArgs
         case args of
-                [inputFile] -> run inputFile
-                _ -> die "Use parameter: <html-inpu-file>"
+                [inputFileArg, lowerLimitArg, upperLimitArg] ->
+                        run inputFileArg lowerLimit upperLimit
+                        where
+                                lowerLimit = (read lowerLimitArg :: Int)
+                                upperLimit = (read upperLimitArg :: Int)
+                _ -> die "Use parameter: <html-inpu-file> <lower> <upper>"
 
 
-run :: FilePath -> IO ()
-run inputFile = do
+run :: FilePath -> Int -> Int -> IO ()
+run inputFile loweLimit upperLimit = do
         html <- readFile inputFile
 
         let originalSentences = collectSentences html
