@@ -29,5 +29,5 @@ dbToSets = map singleDBToSet
 wordInSet :: String -> Set.Set String -> Bool
 wordInSet = Set.member
 
-wordCategory :: String -> [Set.Set String] -> Maybe Int
-wordCategory w sets = fmap (+1) $ elemIndex True $ map (wordInSet w) sets
+wordCategory :: String -> [Set.Set String] -> Int -> Maybe Int
+wordCategory w sets offset = fmap (+ offset) $ elemIndex True $ map (wordInSet w) sets
