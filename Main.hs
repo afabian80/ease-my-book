@@ -7,7 +7,7 @@ import           Database           (dbToSets, findRoot, readDB, wordCategory)
 import           System.Environment (getArgs)
 import           System.Exit        (die)
 import           Text.Printf        (printf)
-import           TextProcessor      (collectWords, getHtmlBody)
+import           TextProcessor      (collectWords, getHtmlBody, collectSentences)
 
 main :: IO ()
 main = do
@@ -26,10 +26,9 @@ run inputFile lowerLimit upperLimit = do
         html <- readFile inputFile
         let body = getHtmlBody html
 
-        --let originalSentences = collectSentences body
+        putStrLn "Collecting sentences..."
+        let originalSentences = collectSentences body
         cocaDB <- readDB
-        let numDBs = length cocaDB
-        putStrLn $ "Number of DBs : " ++ show numDBs
 
         let originalWords = collectWords body
         let numWords = length originalWords
@@ -58,13 +57,13 @@ run inputFile lowerLimit upperLimit = do
         let redWordCategories = map (\w -> wordCategory w redSets (upperLimit + 1)) redWords
         let greenZip = zip3 greenWordCategories greenWords greenRootWords
         let redZip = zip3 redWordCategories redWords redRootWords
-        print "Green pairs:"
+        putStrLn "Green pairs:"
         putStrLn $ unlines $ map showZip greenZip
 
-        print "Red pairs:"
+        putStrLn "Red pairs:"
         putStrLn $ unlines $ map showZip redZip
 
-        print "Done."
+        putStrLn "Done."
 
 showZip :: (Maybe Int, String, Maybe String) -> String
 showZip (category,word,root) = c ++ ": " ++ word ++ " (" ++ r ++ ")"
