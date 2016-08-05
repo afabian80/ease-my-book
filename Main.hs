@@ -55,13 +55,13 @@ run inputFile lowerLimit upperLimit = do
 
         let greenWordCategories = map (\w -> wordCategory w greenSets (lowerLimit + 1)) greenWords
         let redWordCategories = map (\w -> wordCategory w redSets (upperLimit + 1)) redWords
-        let greenZip = zip3 greenWordCategories greenWords greenRootWords
-        let redZip = zip3 redWordCategories redWords redRootWords
+        let rawGreenStat = zip3 greenWordCategories greenWords greenRootWords
+        let rawRedStat = zip3 redWordCategories redWords redRootWords
         putStrLn "Green pairs:"
-        putStrLn $ unlines $ map showZip greenZip
+        putStrLn $ unlines $ map showZip rawGreenStat
 
         putStrLn "Red pairs:"
-        putStrLn $ unlines $ map showZip redZip
+        putStrLn $ unlines $ map showZip rawRedStat
 
         putStrLn "Done."
 
