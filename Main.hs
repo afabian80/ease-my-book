@@ -1,10 +1,12 @@
 module Main where
 
 import           Data.Char          (toLower)
+import           Data.Maybe         (fromMaybe)
 import qualified Data.Set           as Set
-import           Database           (dbToSets, readDB, wordCategory)
+import           Database           (dbToSets, findRoot, readDB, wordCategory)
 import           System.Environment (getArgs)
 import           System.Exit        (die)
+import           Text.Printf        (printf)
 import           TextProcessor      (collectWords, getHtmlBody)
 
 main :: IO ()
@@ -49,14 +51,25 @@ run inputFile lowerLimit upperLimit = do
         let greenWords = Set.toList greenWordSet
         let redWords = Set.toList redWordSet
 
+        let greenRootWords = map (findRoot cocaDB) greenWords
+        let redRootWords = map (findRoot cocaDB) redWords
+
         let greenWordCategories = map (\w -> wordCategory w greenSets (lowerLimit + 1)) greenWords
         let redWordCategories = map (\w -> wordCategory w redSets (upperLimit + 1)) redWords
-        let greenPairs = zip greenWordCategories greenWords
-        let redPairs = zip redWordCategories redWords
+        let greenZip = zip3 greenWordCategories greenWords greenRootWords
+        let redZip = zip3 redWordCategories redWords redRootWords
         print "Green pairs:"
-        putStrLn $ unlines $ map (\(a,b) -> show a ++ ": " ++ show b) greenPairs
+        putStrLn $ unlines $ map showZip greenZip
 
         print "Red pairs:"
-        putStrLn $ unlines $ map (\(a,b) -> show a ++ ": " ++ show b) redPairs
+        putStrLn $ unlines $ map showZip redZip
 
         print "Done."
+
+showZip :: (Maybe Int, String, Maybe String) -> String
+showZip (category,word,root) = c ++ ": " ++ word ++ " (" ++ r ++ ")"
+        where
+                c = case category of
+                        Nothing -> "N/A"
+                        Just x -> printf "%2d K" x
+                r = fromMaybe "NO ROOT FOUND" root

@@ -45,8 +45,8 @@ findRootInSingleDB w db =
         where
                 rootVector = filter (/= Nothing) $ map (findRootInRow w) db
 
-findRoot :: String -> [[[String]]] -> Maybe String
-findRoot w dbs =
+findRoot :: [[[String]]] -> String -> Maybe String
+findRoot dbs w =
         if null rootVector
                 then Nothing
                 else head rootVector
