@@ -1,7 +1,10 @@
-module TextProcessor (collectWords, collectSentences, getHtmlBody, occurrences) where
+module TextProcessor (
+        collectWords, collectSentences, getHtmlBody,
+        occurrences, sampleSentences
+        ) where
 
 import           BookCleaner     (clean, transform)
-import           Data.Char       (isAlpha)
+import           Data.Char       (isAlpha, toLower)
 import           Data.List.Split (splitOn)
 import           Data.Text       (breakOn, pack, unpack)
 
@@ -29,3 +32,16 @@ collectSentences = cleanSentences . getSentences . cleanBody . getHtmlBody
 
 occurrences :: [String] -> String -> Int
 occurrences wordList word = length $ filter (== word) wordList
+
+getWords :: String -> [String]
+getWords [] = []
+getWords text@(x:xs)
+        | isAlpha x = takeWhile isAlpha text : getWords (dropWhile isAlpha text)
+        | x == '<' = getWords (dropWhile (/= '>') xs)
+        | otherwise = getWords xs
+
+partOfSentence :: String -> String -> Bool
+partOfSentence word sentence = word `elem` getWords (map toLower sentence)
+
+sampleSentences :: [String] -> Int -> String -> [String]
+sampleSentences sentences num word = take num $ filter (partOfSentence word) sentences

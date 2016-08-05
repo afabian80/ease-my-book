@@ -1,7 +1,7 @@
 module Main where
 
 import           Data.Char          (toLower)
-import           Data.List          (zip4)
+import           Data.List          (zip5)
 import           Data.Maybe         (fromMaybe)
 import qualified Data.Set           as Set
 import           Database           (dbToSets, findRoot, readDB, wordCategory)
@@ -9,7 +9,7 @@ import           System.Environment (getArgs)
 import           System.Exit        (die)
 import           Text.Printf        (printf)
 import           TextProcessor      (collectSentences, collectWords,
-                                     getHtmlBody, occurrences)
+                                     getHtmlBody, occurrences, sampleSentences)
 
 main :: IO ()
 main = do
@@ -62,8 +62,12 @@ run inputFile lowerLimit upperLimit = do
         let greenWordOccurrences = map (occurrences lowercaseWords) greenWords
         let redWordOccurrences = map (occurrences lowercaseWords) redWords
 
-        let rawGreenStat = zip4 greenWordCategories greenWords greenRootWords greenWordOccurrences
-        let rawRedStat = zip4 redWordCategories redWords redRootWords redWordOccurrences
+        let maxSentences = 3
+        let greenSampleSentences = map (sampleSentences originalSentences maxSentences) greenWords
+        let redSampleSentences = map (sampleSentences originalSentences maxSentences) redWords
+
+        let rawGreenStat = zip5 greenWordCategories greenWords greenRootWords greenWordOccurrences greenSampleSentences
+        let rawRedStat = zip5 redWordCategories redWords redRootWords redWordOccurrences redSampleSentences
 
         putStrLn "Saving green statistics file..."
         writeFile "green.txt" (unlines $ map renderZip rawGreenStat)
@@ -73,8 +77,13 @@ run inputFile lowerLimit upperLimit = do
 
         putStrLn "Done."
 
-renderZip :: (Maybe Int, String, Maybe String, Int) -> String
-renderZip (category,word,root, occ) = c ++ "\t" ++ r ++ "\t" ++ word ++ "\t" ++ show occ
+renderZip :: (Maybe Int, String, Maybe String, Int, [String]) -> String
+renderZip (category,word,root, occ, samples) =
+        c ++ "\t" ++
+        r ++ "\t" ++
+        word ++ "\t" ++
+        show occ ++ "\t" ++
+        show samples
         where
                 c = case category of
                         Nothing -> "N/A"
