@@ -2,7 +2,7 @@ module Database (readDB, wordCategory, dbToSets, findRoot) where
 
 import           Data.List   (elemIndex)
 import qualified Data.Set    as Set
-import           Text.Printf
+import           Text.Printf (printf)
 
 loadSingle :: FilePath -> IO [[String]]
 loadSingle path = do
