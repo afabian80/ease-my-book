@@ -35,6 +35,7 @@ run inputFile lowerLimit upperLimit = do
         putStrLn $ "Number of words: " ++ show numWords
 
         let lowercaseWords = map (map toLower) originalWords
+
         let dbSets = dbToSets cocaDB
 
         --let whiteSets = take lowerLimit dbSets
@@ -47,6 +48,7 @@ run inputFile lowerLimit upperLimit = do
         let wordSet = Set.fromList lowercaseWords
         let greenWordSet = Set.intersection greenSetUnion wordSet
         let redWordSet = Set.intersection redSetUnion wordSet
+
         let greenWords = Set.toList greenWordSet
         let redWords = Set.toList redWordSet
 
@@ -55,8 +57,10 @@ run inputFile lowerLimit upperLimit = do
 
         let greenWordCategories = map (\w -> wordCategory w greenSets (lowerLimit + 1)) greenWords
         let redWordCategories = map (\w -> wordCategory w redSets (upperLimit + 1)) redWords
+
         let rawGreenStat = zip3 greenWordCategories greenWords greenRootWords
         let rawRedStat = zip3 redWordCategories redWords redRootWords
+
         putStrLn "Green pairs:"
         putStrLn $ unlines $ map showZip rawGreenStat
 
