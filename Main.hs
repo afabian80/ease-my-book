@@ -38,7 +38,6 @@ run inputFile lowerLimit upperLimit = do
 
         let dbSets = dbToSets cocaDB
 
-        --let whiteSets = take lowerLimit dbSets
         let greenSets = take (upperLimit - lowerLimit) (drop lowerLimit dbSets)
         let redSets = drop upperLimit dbSets
 
