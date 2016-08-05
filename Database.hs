@@ -1,4 +1,4 @@
-module Database (readDB, wordCategory, dbToSets) where
+module Database (readDB, wordCategory, dbToSets, findRoot) where
 
 import           Data.List   (elemIndex)
 import qualified Data.Set    as Set
@@ -31,3 +31,24 @@ wordInSet = Set.member
 
 wordCategory :: String -> [Set.Set String] -> Int -> Maybe Int
 wordCategory w sets offset = fmap (+ offset) $ elemIndex True $ map (wordInSet w) sets
+
+findRootInRow :: String -> [String] -> Maybe String
+findRootInRow w row = if w `elem` row
+        then Just (head row)
+        else Nothing
+
+findRootInSingleDB :: String -> [[String]] -> Maybe String
+findRootInSingleDB w db =
+        if null rootVector
+                then Nothing
+                else head rootVector
+        where
+                rootVector = filter (/= Nothing) $ map (findRootInRow w) db
+
+findRoot :: String -> [[[String]]] -> Maybe String
+findRoot w dbs =
+        if null rootVector
+                then Nothing
+                else head rootVector
+        where
+                rootVector = filter (/= Nothing) $ map (findRootInSingleDB w) dbs
