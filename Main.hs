@@ -66,15 +66,15 @@ run inputFile lowerLimit upperLimit = do
         let rawRedStat = zip4 redWordCategories redWords redRootWords redWordOccurrences
 
         putStrLn "Saving green statistics file..."
-        writeFile "green.txt" (unlines $ map showZip rawGreenStat)
+        writeFile "green.txt" (unlines $ map renderZip rawGreenStat)
 
         putStrLn "Saving red statistics file..."
-        writeFile "red.txt" (unlines $ map showZip rawRedStat)
+        writeFile "red.txt" (unlines $ map renderZip rawRedStat)
 
         putStrLn "Done."
 
-showZip :: (Maybe Int, String, Maybe String, Int) -> String
-showZip (category,word,root, occ) = c ++ "\t" ++ r ++ "\t" ++ word ++ "\t" ++ show occ
+renderZip :: (Maybe Int, String, Maybe String, Int) -> String
+renderZip (category,word,root, occ) = c ++ "\t" ++ r ++ "\t" ++ word ++ "\t" ++ show occ
         where
                 c = case category of
                         Nothing -> "N/A"
