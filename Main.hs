@@ -1,13 +1,15 @@
 module Main where
 
 import           Data.Char          (toLower)
+import           Data.List          (zip4)
 import           Data.Maybe         (fromMaybe)
 import qualified Data.Set           as Set
 import           Database           (dbToSets, findRoot, readDB, wordCategory)
 import           System.Environment (getArgs)
 import           System.Exit        (die)
 import           Text.Printf        (printf)
-import           TextProcessor      (collectWords, getHtmlBody, collectSentences)
+import           TextProcessor      (collectSentences, collectWords,
+                                     getHtmlBody, occurrences)
 
 main :: IO ()
 main = do
@@ -57,8 +59,11 @@ run inputFile lowerLimit upperLimit = do
         let greenWordCategories = map (\w -> wordCategory w greenSets (lowerLimit + 1)) greenWords
         let redWordCategories = map (\w -> wordCategory w redSets (upperLimit + 1)) redWords
 
-        let rawGreenStat = zip3 greenWordCategories greenWords greenRootWords
-        let rawRedStat = zip3 redWordCategories redWords redRootWords
+        let greenWordOccurrences = map (occurrences lowercaseWords) greenWords
+        let redWordOccurrences = map (occurrences lowercaseWords) redWords
+
+        let rawGreenStat = zip4 greenWordCategories greenWords greenRootWords greenWordOccurrences
+        let rawRedStat = zip4 redWordCategories redWords redRootWords redWordOccurrences
 
         putStrLn "Saving green statistics file..."
         writeFile "green.txt" (unlines $ map showZip rawGreenStat)
@@ -68,8 +73,8 @@ run inputFile lowerLimit upperLimit = do
 
         putStrLn "Done."
 
-showZip :: (Maybe Int, String, Maybe String) -> String
-showZip (category,word,root) = c ++ "\t" ++ word ++ "\t" ++ r
+showZip :: (Maybe Int, String, Maybe String, Int) -> String
+showZip (category,word,root, occ) = c ++ "\t" ++ r ++ "\t" ++ word ++ "\t" ++ show occ
         where
                 c = case category of
                         Nothing -> "N/A"

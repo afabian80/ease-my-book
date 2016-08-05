@@ -1,4 +1,4 @@
-module TextProcessor (collectWords, collectSentences, getHtmlBody) where
+module TextProcessor (collectWords, collectSentences, getHtmlBody, occurrences) where
 
 import           BookCleaner     (clean, transform)
 import           Data.Char       (isAlpha)
@@ -26,3 +26,6 @@ cleanSentences = filter (/= ".")
 
 collectSentences :: String-> [String]
 collectSentences = cleanSentences . getSentences . cleanBody . getHtmlBody
+
+occurrences :: [String] -> String -> Int
+occurrences wordList word = length $ filter (== word) wordList
