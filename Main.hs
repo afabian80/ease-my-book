@@ -66,9 +66,9 @@ run inputFile lowerLimit upperLimit = do
         putStrLn "Done."
 
 showZip :: (Maybe Int, String, Maybe String) -> String
-showZip (category,word,root) = c ++ ": " ++ word ++ " (" ++ r ++ ")"
+showZip (category,word,root) = c ++ "\t" ++ word ++ "\t" ++ r
         where
                 c = case category of
                         Nothing -> "N/A"
-                        Just x -> printf "%2d K" x
+                        Just x -> printf "%d" x
                 r = fromMaybe "NO ROOT FOUND" root
