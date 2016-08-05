@@ -19,5 +19,6 @@ cabal.sandbox.config
 .stack-work/
 cabal.project.local
 
-# kotlin
-*.jar
+# custom
+red.txt
+green.txt

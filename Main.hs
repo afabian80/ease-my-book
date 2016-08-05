@@ -61,11 +61,11 @@ run inputFile lowerLimit upperLimit = do
         let rawGreenStat = zip3 greenWordCategories greenWords greenRootWords
         let rawRedStat = zip3 redWordCategories redWords redRootWords
 
-        putStrLn "Green pairs:"
-        putStrLn $ unlines $ map showZip rawGreenStat
+        putStrLn "Saving green statistics file..."
+        writeFile "green.txt" (unlines $ map showZip rawGreenStat)
 
-        putStrLn "Red pairs:"
-        putStrLn $ unlines $ map showZip rawRedStat
+        putStrLn "Saving red statistics file..."
+        writeFile "red.txt" (unlines $ map showZip rawRedStat)
 
         putStrLn "Done."
 
