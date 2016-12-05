@@ -20,7 +20,7 @@ main = do
                         where
                                 lowerLimit = read lowerLimitArg :: Int
                                 upperLimit = read upperLimitArg :: Int
-                _ -> die "Use parameter: <html-inpu-file> <lower> <upper>"
+                _ -> die "Use parameter: <html-input-file> <lower> <upper>"
 
 
 run :: FilePath -> Int -> Int -> IO ()
