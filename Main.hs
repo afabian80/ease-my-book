@@ -1,7 +1,7 @@
 module Main where
 
 import           Data.Char          (toLower)
-import           Data.List          (zip5)
+import           Data.List          (sortBy, zip5)
 import           Data.Maybe         (fromMaybe)
 import qualified Data.Set           as Set
 import           Database           (dbToSets, findRoot, readDB, wordCategory)
@@ -69,11 +69,14 @@ run inputFile lowerLimit upperLimit = do
         let rawGreenStat = zip5 greenWordCategories greenWords greenRootWords greenWordOccurrences greenSampleSentences
         let rawRedStat = zip5 redWordCategories redWords redRootWords redWordOccurrences redSampleSentences
 
+        let sortedRawGreenStat = sortBy compareTuple5 rawGreenStat
+        let sortedRawRedStat   = sortBy compareTuple5 rawRedStat
+
         putStrLn "Saving green statistics file..."
-        writeFile "green.txt" (unlines $ map renderZip rawGreenStat)
+        writeFile "green.txt" (unlines $ map renderZip sortedRawGreenStat)
 
         putStrLn "Saving red statistics file..."
-        writeFile "red.txt" (unlines $ map renderZip rawRedStat)
+        writeFile "red.txt" (unlines $ map renderZip sortedRawRedStat)
 
         putStrLn "Done."
 
@@ -89,3 +92,6 @@ renderZip (category,word,root, occ, samples) =
                         Nothing -> "N/A"
                         Just x -> printf "%d" x
                 r = fromMaybe "NO ROOT FOUND" root
+
+compareTuple5 :: (Maybe Int, String, Maybe String, Int, [String]) -> (Maybe Int, String, Maybe String, Int, [String]) -> Ordering
+compareTuple5 (_, _, _, occ1, _) (_, _, _, occ2, _) = compare occ2 occ1
